@@ -67,7 +67,7 @@ workflows:
   build_deploy:
     jobs:
       - build:
-      - docker-build
+      - docker-build:
           requires:
             - build
           filters:
