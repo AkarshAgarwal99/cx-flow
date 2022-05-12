@@ -83,6 +83,28 @@ jobs:
                echo "No task id found"
                exit 1
             fi
+            # grab the status of the task
+            # if CANCELLED or FAILED, fail the Build
+            # if SUCCESS, stop waiting and grab the analysisId
+            wait_for_success=true
+            while [ "${wait_for_success}" = "true" ]
+            do
+              ce_status=$(curl -s -u "${SONAR_TOKEN}": "${SONAR_INSTANCE}"/api/ce/task?id=${ce_task_id} | jq -r .task.status)
+              echo "Status of SonarQube task is ${ce_status}"
+              if [ "${ce_status}" = "CANCELLED" ]; then
+                echo "SonarQube Compute job has been cancelled - exiting with error"
+                exit 504
+              fi
+              if [ "${ce_status}" = "FAILED" ]; then
+                echo "SonarQube Compute job has failed - exit with error"
+                exit 500
+              fi
+              if [ "${ce_status}" = "SUCCESS" ]; then
+                wait_for_success=false
+              fi
+              sleep "${SLEEP_TIME}"
+            done
+
 
 workflows:
   build_and_test:
