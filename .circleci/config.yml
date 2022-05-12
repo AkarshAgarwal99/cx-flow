@@ -1,24 +1,24 @@
 version: 2.1
 
-executors:
-  docker:
-    docker:
-      - image: circleci/golang:1.9
+# executors:
+#   docker:
+#     docker:
+#       - image: circleci/golang:1.9
 
-commands: # a reusable command with parameters
-  create-github-release:
-    description: Create Github Release or Pre-Release
-    parameters:
-      ghr-option:
-        default: ""
-        type: string
-    steps:
-      - run: |
-          go get github.com/tcnksm/ghr
-          VERSION=$(cat ./build/libs/version.txt)
-          rm ./build/libs/version.txt
-          mv build/libs/java11/repo-${VERSION}.jar build/libs/cx-flow-${VERSION}-java11.jar
-          ghr -t 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 -u AkarshAgarwal99 -n ${VERSION} -r AkarshAgarwal99/cx-flow -c ${CIRCLE_SHA1} << parameters.ghr-option >> -delete ${VERSION} ./build/libs/
+# commands: # a reusable command with parameters
+#   create-github-release:
+#     description: Create Github Release or Pre-Release
+#     parameters:
+#       ghr-option:
+#         default: ""
+#         type: string
+#     steps:
+#       - run: |
+#           go get github.com/tcnksm/ghr
+#           VERSION=$(cat ./build/libs/version.txt)
+#           rm ./build/libs/version.txt
+#           mv build/libs/java11/repo-${VERSION}.jar build/libs/cx-flow-${VERSION}-java11.jar
+#           ghr -t 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 -u AkarshAgarwal99 -n ${VERSION} -r AkarshAgarwal99/cx-flow -c ${CIRCLE_SHA1} << parameters.ghr-option >> -delete ${VERSION} ./build/libs/
 
 jobs:
   build:
@@ -63,11 +63,9 @@ jobs:
           path: ~/test-results/junit
 
 workflows:
-  version: 2
   build_deploy:
     jobs:
-      - build
-      - docker-build:
+      - build:
           requires:
             - build
           filters:
