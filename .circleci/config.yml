@@ -79,10 +79,10 @@ jobs:
             # get the compute engine task id
             ce_task_id=$(cat $REPORT_PATH | grep $CE_TASK_ID_KEY | cut -d'=' -f2)
             echo "Using task id of ${ce_task_id}"
-            if [ -z "$ce_task_id" ]; then
-               echo "No task id found"
-               exit 1
-            fi
+            # if [ -z "$ce_task_id" ]; then
+            #    echo "No task id found"
+            #    exit 1
+            # fi
             # grab the status of the task
             # if CANCELLED or FAILED, fail the Build
             # if SUCCESS, stop waiting and grab the analysisId
