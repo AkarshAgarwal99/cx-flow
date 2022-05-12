@@ -63,12 +63,8 @@ jobs:
           path: ~/test-results/junit
 
 workflows:
-  build_deploy:
+  build:
     jobs:
       - build:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - develop
