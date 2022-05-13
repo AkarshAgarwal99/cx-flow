@@ -134,7 +134,7 @@ jobs:
             docker build --target java11 \
               -t ${DOCKER_REPO}:${VERSION}-11 \
               .
-            docker push ${DOCKER_REPO}:${SHA1_SHORT}
+
       - run:
           name: Archive Docker images
           command: |
