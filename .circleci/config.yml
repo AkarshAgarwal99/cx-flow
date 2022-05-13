@@ -126,10 +126,10 @@ jobs:
             SHA1_SHORT=${CIRCLE_SHA1::7}
             docker login -u akarshagarwal999 -p Akarsh123usha 
             docker build --target java8 \
-              -t ${DOCKER_REPO}:${SHA1_SHORT} \
-              -t ${DOCKER_REPO}:${VERSION}-8 \
-              -t ${DOCKER_REPO}:${VERSION} \
-              -t ${DOCKER_REPO} \
+              -t ${DOCKER_REPO}/cxflow:${SHA1_SHORT} \
+              -t ${DOCKER_REPO}/cxflow:${VERSION}-8 \
+              -t ${DOCKER_REPO}/cxflow:${VERSION} \
+              -t ${DOCKER_REPO}/cxflow \
               .
             docker build --target java11 \
               -t ${DOCKER_REPO}:${VERSION}-11 \
@@ -139,10 +139,10 @@ jobs:
           name: Archive Docker images
           command: |
             VERSION=$(cat ./build/libs/version.txt)
-            docker save -o image-11.tar ${DOCKER_REPO}:${VERSION}-11
-            docker save -o image-8.tar ${DOCKER_REPO}:${VERSION}-8
-            docker save -o image.tar ${DOCKER_REPO}:${VERSION}
-            docker save -o latest.tar ${DOCKER_REPO}:latest
+            docker save -o image-11.tar ${DOCKER_REPO}/cxflow:${VERSION}-11
+            docker save -o image-8.tar ${DOCKER_REPO}/cxflow:${VERSION}-8
+            docker save -o image.tar ${DOCKER_REPO}/cxflow:${VERSION}
+            docker save -o latest.tar ${DOCKER_REPO}/cxflow:latest
       - persist_to_workspace:
           root: .
           paths:
