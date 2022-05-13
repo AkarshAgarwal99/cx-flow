@@ -124,7 +124,7 @@ jobs:
           command: |
             VERSION=$(cat ./build/libs/version.txt)
             SHA1_SHORT=${CIRCLE_SHA1::7}
-            docker login -u akarshagarwal99@gmail.com -p Akarsh123usha https://hub.docker.com
+            docker login -u akarshagarwal999 -p Akarsh123usha 
             docker build --target java8 \
               -t ${DOCKER_REPO}:${SHA1_SHORT} \
               -t ${DOCKER_REPO}:${VERSION}-8 \
