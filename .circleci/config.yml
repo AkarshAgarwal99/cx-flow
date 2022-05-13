@@ -154,8 +154,9 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - sonar
-      - docker-build:
+      - sonar:
           requires:
             - build
+      - docker-build:
+          requires:
             - sonar
