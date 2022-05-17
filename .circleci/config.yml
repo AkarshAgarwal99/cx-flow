@@ -134,6 +134,7 @@ jobs:
             docker build --target java11 \
               -t ${DOCKER_REPO}/cxflow:${VERSION}-11 \
               .
+            docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT}
       - run:
             name: Install Jfrog CLI
             command: |
@@ -158,10 +159,10 @@ jobs:
             name: docker jf scan
             command: |
               jf docker scan ${DOCKER_REPO}/cxflow:${SHA1_SHORT} --watches Watch_for_vurnability
-      - run:
-            name: docker push
-            command: |              
-              docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT}
+      # - run:
+      #       name: docker push
+      #       command: |              
+      #         docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT}
       - run:
           name: Archive Docker images
           command: |
