@@ -147,14 +147,6 @@ jobs:
             command: |
                 chmod a+x jfrog && sudo mv jfrog /usr/local/bin  
       - run:
-            name: Configure  Jfrog CLI
-            command: |
-              jfrog config add artifactory-server --url="https://vijaymakke.jfrog.io" --user="vijayabhaskarmakke@gmail.com" --password="Persistent@12345$" --interactive=false
-      - run:
-            name: Docker Login
-            command: |
-              docker login -u vijayabhaskarmakke@gmail.com -p Persistent@12345$ vijaymakke.jfrog.io
-      - run:
             name: docker jf scan
             command: |
               jf docker scan ${DOCKER_REPO}/cxflow:${SHA1_SHORT} --watches Watch_for_vurnability
@@ -162,7 +154,21 @@ jobs:
             name: docker push
             command: |              
               docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT}
-
+      - run:
+          name: Archive Docker images
+          command: |
+            VERSION=$(cat ./build/libs/version.txt)
+            docker save -o image-11.tar ${DOCKER_REPO}/cxflow:${VERSION}-11
+            docker save -o image-8.tar ${DOCKER_REPO}/cxflow:${VERSION}-8
+            docker save -o image.tar ${DOCKER_REPO}/cxflow:${VERSION}
+            docker save -o latest.tar ${DOCKER_REPO}/cxflow:latest
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image-11.tar
+            - ./image-8.tar
+            - ./image.tar
+            - ./latest.tar
 workflows:
   build_and_test:
     jobs:
