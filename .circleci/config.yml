@@ -134,27 +134,33 @@ jobs:
             docker build --target java11 \
               -t ${DOCKER_REPO}/cxflow:${VERSION}-11 \
               .
+            curl -fL https://getcli.jfrog.io | sh
+            curl -fL https://install-cli.jfrog.io | sh
+            chmod a+x jfrog && sudo mv jfrog /usr/local/bin
+            jfrog config add artifactory-server --url="https://vijaymakke.jfrog.io" --user="vijayabhaskarmakke@gmail.com" --password="Persistent@12345$" --interactive=false
+            jf docker scan vijaymakke.jfrog.io/default-docker-local/cxflow:${SHA1_SHORT} --watches Watch_for_vurnability
             docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT}
-      - run:
-            name: Install Jfrog CLI
-            command: |
-                curl -fL https://getcli.jfrog.io | sh 
-      - run:
-            name: Install and give permissions
-            command: |
-                curl -fL https://install-cli.jfrog.io | sh 
-      - run:
-            name: give per
-            command: |
-                chmod a+x jfrog && sudo mv jfrog /usr/local/bin  
-      - run:
-            name: Configure  Jfrog CLI
-            command: |
-              jfrog config add artifactory-server --url="https://vijaymakke.jfrog.io" --user="vijayabhaskarmakke@gmail.com" --password="Persistent@12345$" --interactive=false
-      - run:
-            name: docker jf scan
-            command: |
-              jf docker scan vijaymakke.jfrog.io/default-docker-local/cxflow:${SHA1_SHORT} --watches Watch_for_vurnability
+
+      # - run:
+      #       name: Install Jfrog CLI
+      #       command: |
+                
+      # - run:
+      #       name: Install and give permissions
+      #       command: |
+                 
+      # - run:
+      #       name: give per
+      #       command: |
+                  
+      # - run:
+      #       name: Configure  Jfrog CLI
+      #       command: |
+              
+      # - run:
+      #       name: docker jf scan
+      #       command: |
+              
       - run:
           name: Archive Docker images
           command: |
