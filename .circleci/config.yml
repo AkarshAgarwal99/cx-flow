@@ -139,7 +139,7 @@ jobs:
             chmod a+x jfrog && sudo mv jfrog /usr/local/bin
             jfrog config add artifactory-server --url="https://vijaymakke.jfrog.io" --user="vijayabhaskarmakke@gmail.com" --password="Persistent@12345$" --interactive=false
             jf docker scan ${DOCKER_REPO}/cxflow:${SHA1_SHORT} --watches Watch_for_vurnability
-          #  docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT} 
+            docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT}
       - run:
           name: Archive Docker images
           command: |
