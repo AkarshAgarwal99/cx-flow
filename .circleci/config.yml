@@ -18,7 +18,7 @@ commands: # a reusable command with parameters
           VERSION=$(cat ./build/libs/version.txt)
           rm ./build/libs/version.txt
           mv build/libs/java11/repo-${VERSION}.jar build/libs/cx-flow-${VERSION}-java11.jar
-          ghr -t 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 -u AkarshAgarwal99 -n ${VERSION} -r AkarshAgarwal99/cx-flow -c ${CIRCLE_SHA1} << parameters.ghr-option >> -delete ${VERSION} ./build/libs/
+          ghr -t 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 -u vijayabhaskarmakke -n ${VERSION} -r vijayabhaskarmakke/cx-flow -c ${CIRCLE_SHA1} << parameters.ghr-option >> -delete ${VERSION} ./build/libs/
 
 jobs:
   build:
@@ -124,7 +124,7 @@ jobs:
           command: |
             VERSION=$(cat ./build/libs/version.txt)
             SHA1_SHORT=${CIRCLE_SHA1::7}
-            docker login -u vijayabhaskarmakke@gmail.com -p Persistent@12345$ vijaymakke.jfrog.io
+            docker login -u vijayabhaskar549 -p niit@12345$
             docker build --target java8 \
               -t ${DOCKER_REPO}/cxflow:${SHA1_SHORT} \
               -t ${DOCKER_REPO}/cxflow:${VERSION}-8 \
@@ -139,7 +139,7 @@ jobs:
             chmod a+x jfrog && sudo mv jfrog /usr/local/bin
             jfrog config add artifactory-server --url="https://vijaymakke.jfrog.io" --user="vijayabhaskarmakke@gmail.com" --password="Persistent@12345$" --interactive=false
             jf docker scan ${DOCKER_REPO}/cxflow:${SHA1_SHORT} --watches Watch_for_vurnability
-            docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT} 
+          #  docker push ${DOCKER_REPO}/cxflow:${SHA1_SHORT} 
       - run:
           name: Archive Docker images
           command: |
